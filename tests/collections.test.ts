@@ -15,11 +15,11 @@ describe("todo collection insert validation", () => {
 		expect(result.success).toBe(true);
 	});
 
-	it("rejects an insert row with empty title", () => {
+	it("allows an insert row with empty title (text().notNull() permits empty string)", () => {
 		const row = { id: crypto.randomUUID(), title: "", completed: false };
 		const result = todoInsertSchema.safeParse(row);
-		// Empty string is still a valid string in this schema
-		expect(typeof row.title).toBe("string");
+		// text().notNull() only blocks null, not empty string
+		expect(result.success).toBe(true);
 	});
 });
 
